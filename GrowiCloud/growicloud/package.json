@@ -1,51 +1,122 @@
 {
-  "name": "growicloud",
-  "displayName": "GrowiCloud",
-  "description": "",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.71.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:growicloud.helloWorld"
-  ],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "growicloud.helloWorld",
-        "title": "Hello World"
+   "name": "growi-cloud-client",
+   "displayName": "Growi Cloud Client",
+   "description": "VSCodeからGrowiのページ編集・閲覧を行うための拡張機能",
+   "publisher": "k-kuroguro",
+   "version": "1.0.0",
+   "engines": {
+      "vscode": "^1.58.0"
+   },
+   "categories": [
+      "Other"
+   ],
+   "license": "MIT",
+   "homepage": "https://github.com/k-kuroguro/vscode-growi-cloud-client/blob/master/README.md",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/k-kuroguro/vscode-growi-cloud-client.git"
+   },
+   "bugs": {
+      "url": "https://github.com/k-kuroguro/vscode-growi-cloud-client/issues"
+   },
+   "activationEvents": [
+      "*"
+   ],
+   "main": "./dist/extension.js",
+   "contributes": {
+      "commands": [
+         {
+            "command": "growi-cloud-client.setApiToken",
+            "category": "Growi Cloud Client",
+            "title": "Set Api Token"
+         },
+         {
+            "command": "growi-cloud-client.clearApiToken",
+            "category": "Growi Cloud Client",
+            "title": "Clear Api Token"
+         },
+         {
+            "command": "growi-cloud-client.setGrowiUrl",
+            "category": "Growi Cloud Client",
+            "title": "Set Growi URL"
+         },
+         {
+            "command": "growi-cloud-client.newPage",
+            "category": "Growi Cloud Client",
+            "title": "New Page"
+         },
+         {
+            "command": "growi-cloud-client.openPage",
+            "category": "Growi Cloud Client",
+            "title": "Open Page"
+         }
+      ],
+      "viewsContainers": {
+         "activitybar": [
+            {
+               "id": "growi-cloud-client",
+               "title": "Growi Cloud Client",
+               "icon": "resources/growi-logo.svg"
+            }
+         ]
+      },
+      "languages": [
+         {
+            "id": "markdown",
+            "extensions": [
+               ".growi"
+            ]
+         }
+      ],
+      "configuration": {
+         "type": "object",
+         "title": "Growi Cloud Client",
+         "properties": {
+            "growi-cloud-client.growiUrl": {
+               "type": "string",
+               "default": null
+            },
+            "growi-cloud-client.useLsxPlugin": {
+               "type": "boolean",
+               "default": false,
+               "description": "`growi-plugin-lsx`プラグインを使用するか.\n使用すると, ソート機能が使用可能になります."
+            }
+         }
       }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.71.0",
-    "@types/glob": "^7.2.0",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "16.x",
-    "@typescript-eslint/eslint-plugin": "^5.31.0",
-    "@typescript-eslint/parser": "^5.31.0",
-    "eslint": "^8.20.0",
-    "glob": "^8.0.3",
-    "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "ts-loader": "^9.3.1",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "@vscode/test-electron": "^2.1.5"
-  }
+   },
+   "scripts": {
+      "vscode:prepublish": "npm run webpack:prod",
+      "webpack:dev": "webpack --mode development",
+      "webpack:prod": "webpack --mode production --devtool hidden-source-map",
+      "webpack:watch": "webpack --watch",
+      "watch": "npm run webpack:watch",
+      "tsc": "tsc -p ./",
+      "tsc:watch": "tsc -watch -p ./",
+      "test-compile": "run-p webpack:dev tsc",
+      "test-watch": "run-p webpack:watch tsc:watch",
+      "pretest": "npm run test-compile && npm run lint",
+      "lint": "eslint src --ext ts",
+      "test": "node ./out/test/runTest.js"
+   },
+   "devDependencies": {
+      "@types/glob": "^7.1.3",
+      "@types/mocha": "^8.0.4",
+      "@types/node": "^12.11.7",
+      "@types/vscode": "^1.58.0",
+      "@typescript-eslint/eslint-plugin": "^4.14.1",
+      "@typescript-eslint/parser": "^4.14.1",
+      "eslint": "^7.19.0",
+      "glob": "^7.1.6",
+      "mocha": "^10.0.0",
+      "npm-run-all": "^4.1.5",
+      "ts-loader": "^8.0.14",
+      "typescript": "^4.1.3",
+      "vscode-test": "^1.5.0",
+      "webpack": "^5.19.0",
+      "webpack-cli": "^4.4.0"
+   },
+   "dependencies": {
+      "axios": "^0.21.1",
+      "url-join": "^5.0.0"
+   }
 }

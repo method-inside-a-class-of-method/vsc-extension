@@ -1,71 +1,39 @@
-# growicloud README
+# Growi Cloud Client
 
-This is the README for your extension "growicloud". After writing up a brief description, we recommend including the following sections.
+VSCodeからGrowiのページ編集・閲覧を行うための拡張機能.
 
-## Features
+![use-demo](./images/use-demo.gif)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Growi 4.2.21でテスト済み.
 
-For example if there is an image subfolder under your extension project workspace:
+**注意** : この拡張機能は, 編集者が1人であることを前提としています. 複数人での使用は推奨しません.
 
-\!\[feature X\]\(images/feature-x.png\)
+# インストール
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+ [MarketPlace](https://marketplace.visualstudio.com/items?itemName=k-kuroguro.growi-cloud-client)からインストール または,
+ [リリース](https://github.com/k-kuroguro/vscode-growi-cloud-client/releases)から最新のバージョンをダウンロードして, VSCodeにインストールしてください. ([参考](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix))
 
-## Requirements
+# セットアップ
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+![setup-demo](./images/setup-demo.gif)
 
-## Extension Settings
+GrowiのApi Tokenをユーザー設定から取得しておいてください.\
+コマンド`Growi Cloud Client: Set Growi URL`, `Growi Cloud Client: Set Api Token`を実行し, URL/Api Tokenを入力します.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+# 使い方
 
-For example:
+## ページ作成
 
-This extension contributes the following settings:
+![newPage-demo](./images/newPage-demo.gif)
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+コマンド `Growi Cloud Client: New Page`を実行します.\
+作成するページのパスを入力すると, エディタが開くので本文を入力, 保存してください.
 
-## Known Issues
+**注意**: 本文が空の状態では保存できません.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## ページを開く
 
-## Release Notes
+![openPage-demo](./images/openPage-demo.gif)
 
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+コマンド `Growi Cloud Client: Open Page`を実行します.\
+作成するページのパスを入力すると, エディタが開きます.

@@ -92,7 +92,7 @@ export class Setting {
    //#region context
 
    set apiTokenIsUndefined(isUndefined: boolean) {
-      commands.executeCommand('setContext', 'growi-client.apiTokenIsUndefined', isUndefined);
+      commands.executeCommand('setContext', 'growi-cloud-client.apiTokenIsUndefined', isUndefined);
    }
 
    //#endregion
@@ -120,17 +120,17 @@ export class Util {
       if (hasSetUrl && hasSetToken) return;
       if (!hasSetUrl && !hasSetToken) {
          const selected = await window.showErrorMessage('GrowiのURL, Api Tokenが設定されていません.', '設定');
-         if (selected) commands.executeCommand('growi-client.setUrlAndToken');
+         if (selected) commands.executeCommand('growi-cloud-client.setUrlAndToken');
          return;
       }
       if (hasSetToken) {
          const selected = await window.showErrorMessage('GrowiのURLが設定されていません.', '設定');
-         if (selected) commands.executeCommand('growi-client.setGrowiUrl');
+         if (selected) commands.executeCommand('growi-cloud-client.setGrowiUrl');
          return;
       }
       if (hasSetUrl) {
          const selected = await window.showErrorMessage('Api Tokenが設定されていません.', '設定');
-         if (selected) commands.executeCommand('growi-client.setApiToken');
+         if (selected) commands.executeCommand('growi-cloud-client.setApiToken');
          return;
       }
    }

@@ -1,7 +1,7 @@
 import * as pathLib from 'path';
 import { Uri } from 'vscode';
 
-const scheme = 'growi';
+const scheme = 'growi.cloud';
 const ext = 'growi';
 const root = '/';
 

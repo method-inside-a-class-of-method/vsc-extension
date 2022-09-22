@@ -9,6 +9,7 @@ import { FsProvider } from './fsProvider';
 //TODO: 今はApi Tokenが必須になっているが, 必要ない処理もあるので要修正.
 
 export async function activate(context: ExtensionContext) {
+   console.log('GrowiCloud client extension is activated.');
    const setting = new Setting(context.globalState);
    const apiClient = new ApiClient(setting);
    const fsProvider = new FsProvider(apiClient);

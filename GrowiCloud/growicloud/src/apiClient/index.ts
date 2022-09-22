@@ -1,4 +1,5 @@
 import axios from 'axios';
+import urljoin from 'url-join';
 import * as utils from '../utils';
 import { Setting, SettingsError, SettingName } from '../setting';
 import { ApiClientError } from './error';
@@ -24,10 +25,11 @@ export class ApiClient {
    async getPage(path: string): Promise<Page> {
       const [growiUrl, apiToken] = this.getUrlAndToken();
       path = utils.path.normalize(path);
-      const url = `${growiUrl}_api/pages.get?access_token=${apiToken}&path=${encodeURI(path)}`;
+      const url = urljoin(`${growiUrl}`, `_api/v3/page?access_token=${apiToken}&path=${encodeURI(path)}`);
       const response = await axios.get(url).catch(e => this.handleError(e));
-      if (!response.data.ok) this.handleError(response.data.error || response.data, path);
-      if (response.data.page.redirectTo === `/trash${path}`) throw ApiClientError.PageHasMovedToTrash(path);
+      if (response.data.isForbidden) this.handleError('The page is forbidden.');
+      if (response.data.isDeleted) this.handleError('The page is deleted.');
+      if (response.data.page && response.data.page.redirectTo === `/trash${path}`) throw ApiClientError.PageHasMovedToTrash(path);
       return response.data.page as Page;
    }
 
@@ -47,7 +49,7 @@ export class ApiClient {
       path = utils.path.normalize(path);
       const page = await this.getPage(path).catch(e => { throw e; });
       const [growiUrl, apiToken] = this.getUrlAndToken();
-      const url = `${growiUrl}_api/pages.update`;
+      const url = urljoin(`${growiUrl}`, '_api/pages.update');
       const response = await axios.post(url, {
          access_token: apiToken,
          page_id: page.id,
@@ -72,7 +74,7 @@ export class ApiClient {
       const [growiUrl, apiToken] = this.getUrlAndToken();
       path = utils.path.normalize(path);
       const pagePaths = encodeURI(`["${path}"]`);
-      const url = `${growiUrl}_api/pages.exist?access_token=${apiToken}&pagePaths=${pagePaths}`;
+      const url = urljoin(`${growiUrl}`, `_api/pages.exist?access_token=${apiToken}&pagePaths=${pagePaths}`);
       const response = await axios.get(url).catch(e => this.handleError(e));
       if (!response.data.ok) this.handleError(response.data.error || response.data, path);
       if (typeof response.data.pages[path] === 'boolean') return response.data.pages[path];
@@ -93,7 +95,7 @@ export class ApiClient {
    async createPage(path: string, body: string): Promise<Page> {
       const [growiUrl, apiToken] = this.getUrlAndToken();
       path = utils.path.normalize(path);
-      const url = `${growiUrl}_api/v3/pages`;
+      const url = urljoin(`${growiUrl}`, '_api/v3/pages');
       const response = await axios.post(url, {
          access_token: apiToken,
          path,
@@ -104,7 +106,7 @@ export class ApiClient {
          }
       }).catch(e => this.handleError(e));
       if (response.data.errors) this.handleError(response.data.errors[0].code || response.data.errors, path); //TODO: エラーを1つしか確認していない.
-      return { ...response.data.data.page, revision: response.data.data.revision } as Page;
+      return { ...response.data.page, revision: response.data.revision } as Page;
    }
 
    private getUrlAndToken(): [string, string] {

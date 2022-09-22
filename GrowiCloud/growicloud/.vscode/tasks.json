@@ -5,12 +5,19 @@
 	"tasks": [
 		{
 			"type": "npm",
+			"options": {
+				"env": {
+					"NODE_OPTIONS": "--openssl-legacy-provider"
+				}
+			},
 			"script": "watch",
-			"problemMatcher": "$ts-webpack-watch",
+			"problemMatcher": [
+				"$ts-webpack-watch",
+				"$tslint-webpack-watch"
+			],
 			"isBackground": true,
 			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
+				"reveal": "never"
 			},
 			"group": {
 				"kind": "build",
@@ -19,22 +26,45 @@
 		},
 		{
 			"type": "npm",
-			"script": "watch-tests",
+			"options": {
+				"env": {
+					"NODE_OPTIONS": "--openssl-legacy-provider"
+				}
+			},
+			"script": "test-watch",
 			"problemMatcher": "$tsc-watch",
 			"isBackground": true,
 			"presentation": {
-				"reveal": "never",
-				"group": "watchers"
+				"reveal": "never"
 			},
 			"group": "build"
 		},
 		{
-			"label": "tasks: watch-tests",
-			"dependsOn": [
-				"npm: watch",
-				"npm: watch-tests"
-			],
-			"problemMatcher": []
+			"type": "npm",
+			"script": "tsc",
+			"problemMatcher": [],
+			"label": "npm: tsc",
+			"detail": "tsc -p ./"
+		},
+		{
+			"type": "npm",
+			"options": {
+				"env": {
+					"NODE_OPTIONS": "--openssl-legacy-provider"
+				}
+			},
+			"script": "tsc:watch",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: tsc:watch",
+			"detail": "tsc -watch -p ./"
+		},
+		{
+			"type": "npm",
+			"script": "lint",
+			"problemMatcher": [],
+			"label": "npm: lint",
+			"detail": "eslint src --ext ts"
 		}
 	]
 }
